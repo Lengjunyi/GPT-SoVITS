@@ -1,0 +1,70 @@
+[project]
+name = "gpt-sovits"
+version = "0.0.0"
+description = "Few-shot voice conversion and text-to-speech WebUI"
+requires-python = ">=3.10,<3.13"
+# Dependencies mirror the legacy requirements, with uv-specific compatibility bounds.
+# TorchAudio 2.9+ switches audio I/O to TorchCodec; retain the tested 2.7 pair.
+# Gradio 4 imports HfFolder, removed in huggingface-hub 1.0.
+# Several text/ASR dependencies still import pkg_resources.
+# Gradio 4 uses the template-first API removed in Starlette 1.0.
+dependencies = [
+    "numpy<2.0",
+    "scipy",
+    "tensorboard",
+    "librosa==0.10.2",
+    "resampy>=0.4.3",
+    "numba",
+    "pytorch-lightning>=2.4",
+    "gradio<5",
+    "ffmpeg-python",
+    "tqdm",
+    "funasr>=1.3.7",
+    "cn2an",
+    "pypinyin",
+    "pyopenjtalk>=0.4.1",
+    "g2p_en",
+    "torchaudio==2.7.1",
+    "modelscope",
+    "sentencepiece",
+    "transformers>=4.51,<5",
+    "peft<0.18.0",
+    "chardet",
+    "PyYAML",
+    "psutil",
+    "jieba_fast",
+    "jieba",
+    "split-lang",
+    "fast_langdetect>=0.3.1",
+    "wordsegment",
+    "rotary_embedding_torch",
+    "ToJyutping",
+    "g2pk2",
+    "ko_pron",
+    "opencc",
+    "python_mecab_ko; sys_platform != 'win32'",
+    "fastapi[standard]>=0.115.2",
+    "x_transformers",
+    "torchmetrics<=1.5",
+    "pydantic<=2.10.6",
+    "ctranslate2>=4.0,<5",
+    "av>=11",
+    "faster-whisper",
+    "torch==2.7.1",
+    "huggingface-hub<1.0",
+    "setuptools<81",
+    "nltk>=3.9",
+    "soundfile",
+    "starlette<1.0",
+    "onnxruntime; sys_platform == \"darwin\" or platform_machine == \"aarch64\" or platform_machine == \"arm64\"",
+    "onnxruntime-gpu; sys_platform != \"darwin\" and (platform_machine == \"x86_64\" or platform_machine == \"AMD64\")",
+]
+
+[tool.uv]
+package = false
+required-version = ">=0.9.17"
+environments = [
+    "sys_platform == 'darwin' and platform_machine == 'arm64'",
+    "sys_platform == 'linux' and (platform_machine == 'x86_64' or platform_machine == 'aarch64')",
+    "sys_platform == 'win32' and platform_machine == 'AMD64'",
+]
