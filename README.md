@@ -61,6 +61,10 @@ For users in China, you can [click here](https://www.codewithgpu.com/i/RVC-Boss/
 
 ### Tested Environments
 
+For a reproducible installation without Conda, see the [uv setup guide](docs/en/uv.md).
+It includes a committed dependency lockfile, environment checks, and a model/dictionary
+download command for the default v2Pro setup.
+
 | Python Version | PyTorch Version  | Device        |
 | -------------- | ---------------- | ------------- |
 | Python 3.10    | PyTorch 2.5.1    | CUDA 12.4     |
