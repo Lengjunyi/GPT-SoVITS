@@ -1400,7 +1400,7 @@ requires-dist = [
     { name = "python-mecab-ko", marker = "sys_platform != 'win32'" },
     { name = "pytorch-lightning", specifier = ">=2.4" },
     { name = "pyyaml" },
-    { name = "resampy", specifier = ">=0.4.3" },
+    { name = "resampy", specifier = ">=0.4.2,<0.5" },
     { name = "rotary-embedding-torch" },
     { name = "scipy" },
     { name = "sentencepiece" },
