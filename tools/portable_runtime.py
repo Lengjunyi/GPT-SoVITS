@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import shutil
 import sys
 from importlib import import_module
 from importlib.machinery import ModuleSpec
@@ -14,8 +15,16 @@ from types import ModuleType
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 RUNTIME_DIR = PROJECT_ROOT / "runtime"
 SITE_PACKAGES = RUNTIME_DIR / "Lib" / "site-packages"
-FFMPEG_EXE = RUNTIME_DIR / "ffmpeg.exe"
-FFPROBE_EXE = RUNTIME_DIR / "ffprobe.exe"
+
+def _media_executable(name: str) -> str:
+    bundled = RUNTIME_DIR / f"{name}.exe"
+    if os.name == "nt" and bundled.is_file():
+        return str(bundled)
+    return shutil.which(name) or name
+
+
+FFMPEG_EXE = _media_executable("ffmpeg")
+FFPROBE_EXE = _media_executable("ffprobe")
 _DLL_HANDLES = []
 _DLL_READY = False
 _ACTIVE = False
@@ -86,7 +95,8 @@ def activate(*, change_cwd: bool = False) -> None:
         sys.path.insert(0, str(PROJECT_ROOT / "GPT_SoVITS"))
         os.environ["PATH"] = str(RUNTIME_DIR) + os.pathsep + os.environ.get("PATH", "")
         os.environ.setdefault("G2PW", "0")
-        os.environ["NLTK_DATA"] = str(RUNTIME_DIR / "nltk_data")
+        if (RUNTIME_DIR / "nltk_data").is_dir():
+            os.environ.setdefault("NLTK_DATA", str(RUNTIME_DIR / "nltk_data"))
         try:
             import _distutils_hack
             _distutils_hack.add_shim()
